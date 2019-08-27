@@ -29,11 +29,14 @@ public class Main extends JFrame{
 	public static GameModeFrame gamemode_frame=new GameModeFrame();
 	public static IPFrame ip_frame=new IPFrame();
 	public static String ipAddress="";
+	public static enum GAME_STATE{BLACK, WHITE, BLACK_WIN,WHITE_WIN, DRAW}
 	
 	public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException  {
 		start_frame.setVisible(true);
-		int player = 1;//"player" stores the state of the game (1 = black's turn, -1 = white's turn, 2 = black win, -2 = white win, 0 = draw)
+		GAME_STATE gameState = GAME_STATE.BLACK;//"player" stores the state of the game (1 = black's turn, -1 = white's turn, 2 = black win, -2 = white win, 0 = draw)
+		// int player=1;
 		int role = 0;//"role" stores the color of the player
+		GAME_STATE gameRole=GAME_STATE.BLACK;//initialize
 		Scanner in = new Scanner(System.in);
 		try {
 			playMusic();				
@@ -48,12 +51,17 @@ public class Main extends JFrame{
 			//serverOutput.writeInt(in.nextInt());
 
 			role = serverInput.readInt();//the first integer server sends is the color of the player
+			if(role==1){
+				gameRole=GAME_STATE.BLACK;
+			}else if(role==-1){
+				gameRole=GAME_STATE.WHITE;
+			}
 
 			while (true) { 
 				//read the game board from the server
-				setUI(player);
-				updateGame(player, role);
-				if(player==2||player==-2||player==0){
+				gameState=setUI(gameState);
+				updateGame(gameState, gameRole);
+				if(gameState==GAME_STATE.BLACK_WIN||gameState==GAME_STATE.WHITE_WIN||gameState==GAME_STATE.DRAW){
 					break;
 				}
 			}
@@ -66,7 +74,6 @@ public class Main extends JFrame{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-
 		in.close();
 	}
 	
@@ -79,11 +86,10 @@ public class Main extends JFrame{
 			music.loop(Clip.LOOP_CONTINUOUSLY);
 		}catch(Exception e){
 			System.out.println(e);
-		}
-				
+		}				
 	}
 	
-	public static void setUI(int player) {
+	public static GAME_STATE setUI(GAME_STATE gameState) {
 		try{
 			for (int i = 0; i < 19; i++) {
 				for (int j = 0; j < 19; j++) {
@@ -99,22 +105,28 @@ public class Main extends JFrame{
 				}
 				System.out.println("");
 			}
-			player = serverInput.readInt();
-			if (player == 1) {
+			int player = serverInput.readInt();
+			if(player==1){
+				gameState=GAME_STATE.BLACK;
+			}else if(player==-1){
+				gameState=GAME_STATE.WHITE;
+			}
+			if (gameState==GAME_STATE.BLACK) {
 				System.out.println("Black's turn");
 				game_frame.lab_turn.setText("Black's Turn");
 			}
-			if (player == -1) {
+			if (gameState==GAME_STATE.WHITE) {
 				System.out.println("White's turn");
 				game_frame.lab_turn.setText("White's Turn");
 			}
 		}catch(Exception e){
 			System.out.println(e);
-		}	
+		}
+		return gameState;
 	}
 
-	public static void updateGame(int player,int role){
-		if (player == role) { //if the current turn is the player's color
+	public static void updateGame(GAME_STATE gameState,GAME_STATE gameRole){
+		if (gameState == gameRole) { //if the current turn is the player's color
 				for (int i=0;i<19;i++) {
 					for (int j=0;j<19;j++) {
 						if (keys[i][j]==0) {//enable the cells that are empty
@@ -123,13 +135,13 @@ public class Main extends JFrame{
 							
 					}
 				}
-		} else if (player == 2) {
+		} else if (gameState == GAME_STATE.BLACK_WIN) {
 			System.out.println("Black wins");
 			JOptionPane.showMessageDialog(null, "Black Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-		} else if (player == -2) {
+		} else if (gameState == GAME_STATE.WHITE_WIN) {
 			System.out.println("White wins");
 			JOptionPane.showMessageDialog(null, "White Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-		} else if (player == 0) {
+		} else if (gameState == GAME_STATE.DRAW) {
 			System.out.println("Draw");
 			JOptionPane.showMessageDialog(null, "It's a Draw!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 		}
