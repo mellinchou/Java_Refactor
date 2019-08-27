@@ -51,11 +51,7 @@ public class Main extends JFrame{
 			//serverOutput.writeInt(in.nextInt());
 
 			role = serverInput.readInt();//the first integer server sends is the color of the player
-			if(role==1){
-				gameRole=GAME_STATE.BLACK;
-			}else if(role==-1){
-				gameRole=GAME_STATE.WHITE;
-			}
+			serverFeedBackToGameState(role);
 
 			while (true) { 
 				//read the game board from the server
@@ -106,17 +102,7 @@ public class Main extends JFrame{
 				System.out.println("");
 			}
 			int serverFeedBack = serverInput.readInt();
-			if(serverFeedBack==1){
-				gameState=GAME_STATE.BLACK;
-			}else if(serverFeedBack==-1){
-				gameState=GAME_STATE.WHITE;
-			}else if(serverFeedBack==2){
-				gameState=GAME_STATE.BLACK_WIN;
-			}else if(serverFeedBack==-2){
-				gameState=GAME_STATE.WHITE_WIN;
-			}else if(serverFeedBack==0){
-				gameState=GAME_STATE.DRAW;
-			}
+			gameState=serverFeedBackToGameState(serverFeedBack);
 			if (gameState==GAME_STATE.BLACK) {
 				System.out.println("Black's turn");
 				game_frame.lab_turn.setText("Black's Turn");
@@ -128,6 +114,20 @@ public class Main extends JFrame{
 			System.out.println(e);
 		}
 		return gameState;
+	}
+
+	public static GAME_STATE serverFeedBackToGameState(int serverFeedBack){ //transfer serverInput to current game's state
+		if(serverFeedBack==1){
+			return GAME_STATE.BLACK;
+		}else if(serverFeedBack==-1){
+			return GAME_STATE.WHITE;
+		}else if(serverFeedBack==2){
+			return GAME_STATE.BLACK_WIN;
+		}else if(serverFeedBack==-2){
+			return GAME_STATE.WHITE_WIN;
+		}else { //serverFeedBack==0
+			return GAME_STATE.DRAW;
+		}
 	}
 
 	public static void updateGame(GAME_STATE gameState,GAME_STATE gameRole){
