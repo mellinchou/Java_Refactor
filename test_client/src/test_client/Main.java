@@ -41,11 +41,11 @@ public class Main extends JFrame{
 		int role = 0;//"role" stores the color of the player
 		Scanner in = new Scanner(System.in);
 		try {
-			AudioInputStream music = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
-			Clip test = AudioSystem.getClip();
-			test.open(music);
-			test.start();
-			test.loop(Clip.LOOP_CONTINUOUSLY);
+			AudioInputStream musicFile = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
+			Clip music = AudioSystem.getClip();
+			music.open(musicFile);
+			music.start();
+			music.loop(Clip.LOOP_CONTINUOUSLY);
 			
 			
 			while(getAddress()=="") {
