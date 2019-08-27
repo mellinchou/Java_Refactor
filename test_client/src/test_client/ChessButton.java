@@ -1,6 +1,4 @@
 package test_client;
-
-
 import javax.swing.JButton;
 
 //this is the individual buttons on the chess board
