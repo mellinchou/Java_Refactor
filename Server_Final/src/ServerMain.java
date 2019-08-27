@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 public class ServerMain {
 	enum Status{CONTINUE, BLACK_WIN,WHITE_WIN,DRAW};
 	enum Turn{BLACK,WHITE};
+	enum GameMode{ONLINE,COMPUTER};
 	static ServerSocket serverSock;
 	static Socket connection1;
 	static Socket connection2;
@@ -19,7 +20,7 @@ public class ServerMain {
 	
 	public static void main(String[] args) {
 		
-		int game_mode=-1;
+		GameMode game_mode=GameMode.COMPUTER;
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();
 			JOptionPane.showMessageDialog(null, "Server IP: "+inetAddress.getHostAddress(), "Server IP", JOptionPane.INFORMATION_MESSAGE);
@@ -29,7 +30,9 @@ public class ServerMain {
 			clientInput1=new DataInputStream(connection1.getInputStream());
 			clientOutput1=new DataOutputStream(connection1.getOutputStream());
 			 
-			game_mode=clientInput1.readInt();
+			int game_mode_temp=clientInput1.readInt();
+			if (game_mode_temp==0) game_mode=GameMode.ONLINE;
+			else if (game_mode_temp==1) game_mode=GameMode.COMPUTER;
 			System.out.println("Game Mode Selected: "+game_mode);
 			
 			clientOutput1.writeInt(1);//assigning black to the player 1
@@ -44,7 +47,7 @@ public class ServerMain {
 		Scanner in =new Scanner(System.in);
 		int x=-1,y=-1,x1=-1,y1=-1;
 		
-		if (game_mode==0) {//play with another online player
+		if (game_mode==GameMode.ONLINE) {//play with another online player
 			try {
 				connection2=serverSock.accept();
 				clientInput2=new DataInputStream(connection2.getInputStream());
@@ -133,7 +136,7 @@ public class ServerMain {
 			}
 			
 			
-		}else if (game_mode==1) {//play with computer
+		}else if (game_mode==GameMode.COMPUTER) {//play with computer
 			while(status==Status.CONTINUE) {
 				
 				try {
