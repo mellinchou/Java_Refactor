@@ -52,26 +52,8 @@ public class Main extends JFrame{
 			while (true) { 
 				//read the game board from the server
 				setUI(player);
-				if (player == role) { //if the current turn is the player's color
-					for (int i=0;i<19;i++) {
-						for (int j=0;j<19;j++) {
-							if (keys[i][j]==0) {//enable the cells that are empty
-								game_frame.buttons[i][j].setEnabled(true);
-							}
-							
-						}
-					}
-				} else if (player == 2) {
-					System.out.println("Black wins");
-					JOptionPane.showMessageDialog(null, "Black Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-					break;
-				} else if (player == -2) {
-					System.out.println("White wins");
-					JOptionPane.showMessageDialog(null, "White Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-					break;
-				} else if (player == 0) {
-					System.out.println("Draw");
-					JOptionPane.showMessageDialog(null, "It's a Draw!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+				updateGame(player, role);
+				if(player==2||player==-2||player==0){
 					break;
 				}
 			}
@@ -129,6 +111,28 @@ public class Main extends JFrame{
 		}catch(Exception e){
 			System.out.println(e);
 		}	
+	}
+
+	public static void updateGame(int player,int role){
+		if (player == role) { //if the current turn is the player's color
+				for (int i=0;i<19;i++) {
+					for (int j=0;j<19;j++) {
+						if (keys[i][j]==0) {//enable the cells that are empty
+							game_frame.buttons[i][j].setEnabled(true);
+						}
+							
+					}
+				}
+		} else if (player == 2) {
+			System.out.println("Black wins");
+			JOptionPane.showMessageDialog(null, "Black Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+		} else if (player == -2) {
+			System.out.println("White wins");
+			JOptionPane.showMessageDialog(null, "White Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+		} else if (player == 0) {
+			System.out.println("Draw");
+			JOptionPane.showMessageDialog(null, "It's a Draw!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 	public static void send(int x, int y) throws IOException {//send the coordinates to the server
