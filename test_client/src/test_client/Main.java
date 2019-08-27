@@ -41,13 +41,12 @@ public class Main extends JFrame{
 		int role = 0;//"role" stores the color of the player
 		Scanner in = new Scanner(System.in);
 		try {
-			AudioInputStream music = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
-			Clip test = AudioSystem.getClip();
-			test.open(music);
-			test.start();
-			test.loop(Clip.LOOP_CONTINUOUSLY);
-			
-			
+			AudioInputStream musicFile = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
+			Clip music = AudioSystem.getClip();
+			music.open(musicFile);
+			music.start();
+			music.loop(Clip.LOOP_CONTINUOUSLY);		
+				
 			while(getAddress()=="") {
 				//stay here dont move until ip address is entered
 			}
@@ -62,30 +61,7 @@ public class Main extends JFrame{
 
 			while (true) { 
 				//read the game board from the server
-				for (int i = 0; i < 19; i++) {
-					for (int j = 0; j < 19; j++) {
-						int temp = serverInput.readInt();
-						System.out.print(temp + "  ");
-						keys[i][j] = temp;
-						game_frame.buttons[i][j].setEnabled(false);
-						if (keys[i][j]==1) {//if the cell is black, set the corresponding button to black
-							game_frame.buttons[i][j].setBackground(Color.black);
-						}else if(keys[i][j]==2) {//if the cell is white, set the corresponding button to white
-							game_frame.buttons[i][j].setBackground(Color.white);
-						}
-					}
-					System.out.println("");
-				}
-				player = serverInput.readInt();
-				if (player == 1) {
-					System.out.println("Black's turn");
-					game_frame.lab_turn.setText("Black's Turn");
-				}
-				if (player == -1) {
-					System.out.println("White's turn");
-					game_frame.lab_turn.setText("White's Turn");
-				}
-
+				setUI();
 				if (player == role) { //if the current turn is the player's color
 					for (int i=0;i<19;i++) {
 						for (int j=0;j<19;j++) {
@@ -118,11 +94,35 @@ public class Main extends JFrame{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-System.out.println("hello!");
 
 		in.close();
 	}
 	
+	public static void setUI() {
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				int temp = serverInput.readInt();
+				System.out.print(temp + "  ");
+				keys[i][j] = temp;
+				game_frame.buttons[i][j].setEnabled(false);
+				if (keys[i][j]==1) {//if the cell is black, set the corresponding button to black
+					game_frame.buttons[i][j].setBackground(Color.black);
+				}else if(keys[i][j]==2) {//if the cell is white, set the corresponding button to white
+					game_frame.buttons[i][j].setBackground(Color.white);
+				}
+			}
+			System.out.println("");
+		}
+		player = serverInput.readInt();
+		if (player == 1) {
+			System.out.println("Black's turn");
+			game_frame.lab_turn.setText("Black's Turn");
+		}
+		if (player == -1) {
+			System.out.println("White's turn");
+			game_frame.lab_turn.setText("White's Turn");
+		}
+	}
 	
 	public static void send(int x, int y) throws IOException {//send the coordinates to the server
 		serverOutput.writeInt(y);
