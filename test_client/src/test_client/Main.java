@@ -29,13 +29,13 @@ public class Main extends JFrame{
 	public static GameModeFrame gamemode_frame=new GameModeFrame();
 	public static IPFrame ip_frame=new IPFrame();
 	public static String ipAddress="";
-	public static enum GAME_STATE{BLACK, WHITE, BLACK_WIN,WHITE_WIN, DRAW}
+	public static enum GAME_STATE{BLACK, WHITE, BLACK_WIN,WHITE_WIN, DRAW};
 	
 	public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException  {
 		start_frame.setVisible(true);
 		GAME_STATE gameState = GAME_STATE.BLACK;//"player" stores the state of the game (1 = black's turn, -1 = white's turn, 2 = black win, -2 = white win, 0 = draw)
 		// int player=1;
-		int role = 0;//"role" stores the color of the player
+		int role = 0;//"role" stores the color of the player from serverInput
 		GAME_STATE gameRole=GAME_STATE.BLACK;//initialize
 		Scanner in = new Scanner(System.in);
 		try {
@@ -105,17 +105,22 @@ public class Main extends JFrame{
 				}
 				System.out.println("");
 			}
-			int player = serverInput.readInt();
-			if(player==1){
+			int serverFeedBack = serverInput.readInt();
+			if(serverFeedBack==1){
 				gameState=GAME_STATE.BLACK;
-			}else if(player==-1){
+			}else if(serverFeedBack==-1){
 				gameState=GAME_STATE.WHITE;
+			}else if(serverFeedBack==2){
+				gameState=GAME_STATE.BLACK_WIN;
+			}else if(serverFeedBack==-2){
+				gameState=GAME_STATE.WHITE_WIN;
+			}else if(serverFeedBack==0){
+				gameState=GAME_STATE.DRAW;
 			}
 			if (gameState==GAME_STATE.BLACK) {
 				System.out.println("Black's turn");
 				game_frame.lab_turn.setText("Black's Turn");
-			}
-			if (gameState==GAME_STATE.WHITE) {
+			}else if (gameState==GAME_STATE.WHITE) {
 				System.out.println("White's turn");
 				game_frame.lab_turn.setText("White's Turn");
 			}
