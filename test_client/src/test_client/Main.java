@@ -18,7 +18,7 @@ import java.io.*;
 
 //Client Side Main
 public class Main extends JFrame{
-	
+	private static final long serialVersionUID = 1L;
 	public static int[][] keys = new int[19][19];//to store the state of each cell in the game board (coming from the server)
 	
 	public static DataInputStream serverInput;

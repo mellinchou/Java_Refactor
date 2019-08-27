@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class IPFrame extends JFrame implements ActionListener{
-
+	private static final long serialVersionUID = 1L;
 	private final TextField ip_tf =new TextField(50);
 	private final JButton btn_connect=new JButton("Connect");
 	private final JButton btn_back=new JButton("  Back  ");

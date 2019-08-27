@@ -3,6 +3,7 @@ import javax.swing.JButton;
 
 //this is the individual buttons on the chess board
 public class ChessButton extends JButton{
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	private String coordinates;

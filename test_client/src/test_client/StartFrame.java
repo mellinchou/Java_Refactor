@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 
 //this is the first window to show up
 public class StartFrame extends JFrame implements ActionListener{
+	private static final long serialVersionUID = 1L;
 	private final JButton btn_instructions=new JButton("Instructions");
 	private final JButton btn_start=new JButton("    Play    ");
 	private final JButton btn_exit=new JButton("    Exit    ");

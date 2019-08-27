@@ -18,7 +18,8 @@ import javax.swing.border.Border;
 
 //this is the window to select the game mode
 public class GameModeFrame extends JFrame implements ActionListener{
-	private final JButton btn_online=new JButton("Online Player");
+	private static final long serialVersionUID = 1L;
+	private final JButton btn_online = new JButton("Online Player");
 	private final JButton btn_pc=new JButton("  Computer  ");
 	private final JButton btn_back=new JButton("    Back    ");
 
