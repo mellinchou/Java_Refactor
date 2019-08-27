@@ -26,8 +26,8 @@ public class Main extends JFrame{
 	
 	public static int[][] keys = new int[19][19];//to store the state of each cell in the game board (coming from the server)
 	
-	private static DataInputStream serverInput;
-	private static DataOutputStream serverOutput;
+	public static DataInputStream serverInput;
+	public static DataOutputStream serverOutput;
 	
 	public static GameFrame game_frame=new GameFrame();	
 	public static StartFrame start_frame=new StartFrame();
@@ -41,12 +41,7 @@ public class Main extends JFrame{
 		int role = 0;//"role" stores the color of the player
 		Scanner in = new Scanner(System.in);
 		try {
-			AudioInputStream musicFile = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
-			Clip music = AudioSystem.getClip();
-			music.open(musicFile);
-			music.start();
-			music.loop(Clip.LOOP_CONTINUOUSLY);		
-				
+			playMusic();				
 			while(getAddress()=="") {
 				//stay here dont move until ip address is entered
 			}
@@ -61,7 +56,7 @@ public class Main extends JFrame{
 
 			while (true) { 
 				//read the game board from the server
-				setUI();
+				setUI(player);
 				if (player == role) { //if the current turn is the player's color
 					for (int i=0;i<19;i++) {
 						for (int j=0;j<19;j++) {
@@ -98,30 +93,47 @@ public class Main extends JFrame{
 		in.close();
 	}
 	
-	public static void setUI() {
-		for (int i = 0; i < 19; i++) {
-			for (int j = 0; j < 19; j++) {
-				int temp = serverInput.readInt();
-				System.out.print(temp + "  ");
-				keys[i][j] = temp;
-				game_frame.buttons[i][j].setEnabled(false);
-				if (keys[i][j]==1) {//if the cell is black, set the corresponding button to black
-					game_frame.buttons[i][j].setBackground(Color.black);
-				}else if(keys[i][j]==2) {//if the cell is white, set the corresponding button to white
-					game_frame.buttons[i][j].setBackground(Color.white);
+	public static void playMusic() {
+		try{
+			AudioInputStream musicFile = AudioSystem.getAudioInputStream(new File(".\\javamusic.wav"));
+			Clip music = AudioSystem.getClip();
+			music.open(musicFile);
+			music.start();
+			music.loop(Clip.LOOP_CONTINUOUSLY);
+		}catch(Exception e){
+			System.out.println(e);
+		}
+				
+	}
+	
+	public static void setUI(int player) {
+		try{
+			for (int i = 0; i < 19; i++) {
+				for (int j = 0; j < 19; j++) {
+					int temp = serverInput.readInt();
+					System.out.print(temp + "  ");
+					keys[i][j] = temp;
+					game_frame.buttons[i][j].setEnabled(false);
+					if (keys[i][j]==1) {//if the cell is black, set the corresponding button to black
+						game_frame.buttons[i][j].setBackground(Color.black);
+					}else if(keys[i][j]==2) {//if the cell is white, set the corresponding button to white
+						game_frame.buttons[i][j].setBackground(Color.white);
+					}
 				}
+				System.out.println("");
 			}
-			System.out.println("");
-		}
-		player = serverInput.readInt();
-		if (player == 1) {
-			System.out.println("Black's turn");
-			game_frame.lab_turn.setText("Black's Turn");
-		}
-		if (player == -1) {
-			System.out.println("White's turn");
-			game_frame.lab_turn.setText("White's Turn");
-		}
+			player = serverInput.readInt();
+			if (player == 1) {
+				System.out.println("Black's turn");
+				game_frame.lab_turn.setText("Black's Turn");
+			}
+			if (player == -1) {
+				System.out.println("White's turn");
+				game_frame.lab_turn.setText("White's Turn");
+			}
+		}catch(Exception e){
+			System.out.println(e);
+		}	
 	}
 	
 	public static void send(int x, int y) throws IOException {//send the coordinates to the server
