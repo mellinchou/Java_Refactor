@@ -16,6 +16,7 @@ public class ServerMain {
 	static DataOutputStream clientOutput1;
 	static DataInputStream clientInput2;
 	static DataOutputStream clientOutput2;
+	static ComputerPlay computer;
 	
 	public static void main(String[] args) {
 		
@@ -65,7 +66,7 @@ public class ServerMain {
 						}
 					}
 					
-					int win=p1.checkWin(p1.keys,5);
+					int win = p1.checkWin(p1.keys,5);
 					if (win==1) {
 						status=Status.BLACK_WIN;
 						clientOutput1.writeInt(2);
@@ -168,7 +169,7 @@ public class ServerMain {
 					}else {
 						clientOutput1.writeInt(-1);
 						
-						int[] pc_decision=p1.computerPlay();
+						int[] pc_decision=computer.computerPlay(win);
 						p1.keys[pc_decision[0]][pc_decision[1]]=2;
 						System.out.println("After Black's play");
 						p1.print();
