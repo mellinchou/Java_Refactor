@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class GameFrame extends JFrame{
-	private static final int RADIUS = 23;
 	public ChessButton[][] buttons = new ChessButton[19][19];
 	public final JLabel lab_turn=new JLabel("Waiting for the Other Player...");
 	private final JPanel chess_container=new JPanel(new GridLayout(19,19)); 
