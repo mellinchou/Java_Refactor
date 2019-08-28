@@ -1,4 +1,4 @@
-package test_client;
+package com.codingx.java.client;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

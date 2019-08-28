@@ -1,4 +1,4 @@
-package test_client;
+package com.codingx.java.client;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

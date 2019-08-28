@@ -1,5 +1,4 @@
-
-import java.util.Random;
+package com.codingx.java.server;
 
 public class Play {
 	private static final int ROW = 19;

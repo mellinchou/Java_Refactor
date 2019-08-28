@@ -1,3 +1,4 @@
+package com.codingx.java.server;
 import java.util.Random;
 
 public class ComputerPlay {
