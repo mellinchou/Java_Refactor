@@ -3,7 +3,7 @@
   associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <enumeration id="1" language="java" name="server.ServerMain.Turn" project="Java_server" 
     file="/Java_server/src/server/ServerMain.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="136" width="171" x="377" y="88"/>    
+    <position height="-1" width="-1" x="282" y="-7"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </enumeration>  
   <enumeration id="2" language="java" name="server.ServerMain.Status" project="Java_server" 
     file="/Java_server/src/server/ServerMain.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="176" width="171" x="588" y="88"/>    
+    <position height="-1" width="-1" x="279" y="238"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </enumeration>  
   <class id="3" language="java" name="server.ChessBoard" project="Java_server" 
     file="/Java_server/src/server/ChessBoard.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="196" width="176" x="979" y="324"/>    
+    <position height="-1" width="-1" x="1175" y="427"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <enumeration id="4" language="java" name="server.ServerMain.GameMode" project="Java_server" 
     file="/Java_server/src/server/ServerMain.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="136" width="207" x="1019" y="88"/>    
+    <position height="-1" width="-1" x="296" y="489"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </enumeration>  
   <class id="5" language="java" name="server.ComputerPlay" project="Java_server" 
     file="/Java_server/src/server/ComputerPlay.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="196" width="159" x="799" y="88"/>    
+    <position height="-1" width="-1" x="1159" y="46"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="server.ServerMain" project="Java_server" 
     file="/Java_server/src/server/ServerMain.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="316" width="315" x="799" y="-268"/>    
+    <position height="-1" width="-1" x="747" y="243"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -76,7 +76,6 @@
     <end type="TARGET" refId="3"/>  
   </dependency>  
   <association id="13">    
-    <bendpoint x="988" y="88"/>    
     <end type="SOURCE" refId="6" navigable="false">      
       <attribute id="14" name="chessBoard"/>      
       <multiplicity id="15" minimum="0" maximum="1"/>    
