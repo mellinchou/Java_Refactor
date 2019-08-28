@@ -1,6 +1,5 @@
 package test_client;
 
-
 import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
