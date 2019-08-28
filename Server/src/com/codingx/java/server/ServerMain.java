@@ -43,7 +43,7 @@ public class ServerMain {
 			e.printStackTrace();
 		}
 		
-		Play p1=new Play();
+		ChessBoard chessBoard=new ChessBoard();
 		Status status=Status.CONTINUE;
 		Turn turn=Turn.BLACK;//black starts the game
 		Scanner in =new Scanner(System.in);
@@ -65,12 +65,12 @@ public class ServerMain {
 				try {
 					for (int i=0;i<19;i++) { //send the current game board to the players
 						for (int j=0;j<19;j++) {
-							clientOutput1.writeInt(p1.keys[i][j]);
-							clientOutput2.writeInt(p1.keys[i][j]);
+							clientOutput1.writeInt(chessBoard.keys[i][j]);
+							clientOutput2.writeInt(chessBoard.keys[i][j]);
 						}
 					}
 					
-					int win = p1.checkWin(p1.keys,5);
+					int win = chessBoard.checkWin(chessBoard.keys,5);
 					if (win==1) {
 						status=Status.BLACK_WIN;
 						clientOutput1.writeInt(2);
@@ -94,9 +94,8 @@ public class ServerMain {
 						x = clientInput1.readInt();//read the coordinates from the players
 						y = clientInput1.readInt();
 						
-						p1.keys[x][y]=1;
+						chessBoard.keys[x][y]=1;
 						System.out.println("After Black's play");
-						//p1.print();
 						System.out.println("From Client Black: "+x+y);
 						turn=Turn.WHITE;
 					}else {
@@ -108,7 +107,7 @@ public class ServerMain {
 						x1 = clientInput2.readInt();//read the coordinates from the players
 						y1 = clientInput2.readInt();
 						
-						p1.keys[x1][y1]=2;
+						chessBoard.keys[x1][y1]=2;
 						System.out.println("After White's play");
 						//p1.print();
 						System.out.println("From Client White: "+x1+""+y1);
@@ -144,11 +143,11 @@ public class ServerMain {
 				try {
 					for (int i=0;i<19;i++) { //send the current game board to the player
 						for (int j=0;j<19;j++) {
-							clientOutput1.writeInt(p1.keys[i][j]);
+							clientOutput1.writeInt(chessBoard.keys[i][j]);
 						}
 					}
 					
-					int win=p1.checkWin(p1.keys,5);
+					int win=chessBoard.checkWin(chessBoard.keys,5);
 					if (win==1) {
 						status=Status.BLACK_WIN;
 						clientOutput1.writeInt(2);
@@ -165,18 +164,18 @@ public class ServerMain {
 						x = clientInput1.readInt();//read the coordinates from the player
 						y = clientInput1.readInt();
 						
-						p1.keys[x][y]=1;
+						chessBoard.keys[x][y]=1;
 						System.out.println("After Black's play");
-						p1.print();
+						chessBoard.print();
 					
 						turn=Turn.WHITE;
 					}else {
 						clientOutput1.writeInt(-1);
 						
 						int[] pc_decision=computer.computerPlay(win);
-						p1.keys[pc_decision[0]][pc_decision[1]]=2;
+						chessBoard.keys[pc_decision[0]][pc_decision[1]]=2;
 						System.out.println("After Black's play");
-						p1.print();
+						chessBoard.print();
 						
 						turn=Turn.BLACK;
 					}

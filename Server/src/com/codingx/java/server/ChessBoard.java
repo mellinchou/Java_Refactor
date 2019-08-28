@@ -1,12 +1,12 @@
 package com.codingx.java.server;
 
-public class Play {
+public class ChessBoard {
 	private static final int ROW = 19;
 	private static final int COL = 19;
 
 	public int keys[][] = new int[ROW][COL];// 0 is empty, 1 is black, 2 is white
 
-	public Play() {
+	public ChessBoard() {
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
 				keys[i][j] = 0;// initialize the game board with all empty keys

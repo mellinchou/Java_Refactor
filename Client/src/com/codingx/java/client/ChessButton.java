@@ -11,10 +11,10 @@ public class ChessButton extends JButton implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
-	private String coordinates;
+	private String coordinates="";
 
 	public ChessButton(int x, int y) { // when creating the button object, use x and y to record it's coordinates
-		this.addActionListener(new ChessButtonListener());
+		this.addActionListener(this);
 		this.x = x;
 		this.y = y;
 	}
@@ -33,7 +33,6 @@ public class ChessButton extends JButton implements ActionListener {
 		return coordinates;
 	}
 
-	public String coordinates = "";
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
