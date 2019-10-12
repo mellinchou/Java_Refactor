@@ -51,9 +51,12 @@ public class ClientMain extends JFrame{
 			role = serverInput.readInt();//the first integer server sends is the color of the player
 			gameRole=serverFeedBackToGameState(role);//convert the role into BLACK or WHITE
 
+			int roundCount=1;
 			while (true) { 
 				//read the game board from the server
+				System.out.println("Round "+roundCount);
 				setUI();
+				roundCount++;
 				updateGame(gameRole);
 				if(gameState==GAME_STATE.BLACK_WIN||gameState==GAME_STATE.WHITE_WIN||gameState==GAME_STATE.DRAW){
 					break;
@@ -66,7 +69,7 @@ public class ClientMain extends JFrame{
 			serverInput.close();
 			cSock.close();
 		} catch (IOException e) {
-			System.out.println("this is a bug"+e.getMessage());
+			System.out.println("exception 1 from ClientMain "+e.getMessage());
 			System.exit(0);
 		}
 		in.close();
@@ -113,7 +116,7 @@ public class ClientMain extends JFrame{
 				game_frame.lab_turn.setText("White's Turn");
 			}
 		}catch(Exception e){
-			System.out.println("exception 1" +e);
+			System.out.println("exception 2 from ClientMain " +e);
 			System.exit(0);
 		}
 	}
