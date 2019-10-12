@@ -29,16 +29,24 @@ public class PlayerModeContext {
 			clientInput1 = new DataInputStream(connection1.getInputStream());
 			clientOutput1 = new DataOutputStream(connection1.getOutputStream());
 			
-			//dynamically initializing the game with the selected game mode
-			int game_mode_temp = clientInput1.readInt();
-			if (game_mode_temp == 0) {
-				this.setPlayerMode(new TwoPlayerMode());
+			while (true) {
+				//dynamically initializing the game with the selected game mode
+				int game_mode_temp = clientInput1.readInt();
+				if (game_mode_temp == 0) {
+					this.setPlayerMode(new TwoPlayerMode());
+				}
+				else if (game_mode_temp == 1) {
+					this.setPlayerMode(new SinglePlayerMode());
+				}
+				clientOutput1.writeInt(1);// assigning black to the player 1
+				this.executeGame();//begin the game
+				
+				//after ending the game, reset all
+				chessBoard.resetBoard();
+				Turn turn = Turn.BLACK;
+				Status status = Status.CONTINUE;
 			}
-			else if (game_mode_temp == 1) {
-				this.setPlayerMode(new SinglePlayerMode());
-			}
-			clientOutput1.writeInt(1);// assigning black to the player 1
-			this.executeGame();//begin the game
+			
 
 		} catch (IOException e) {
 			System.out.println("exception 1 from PlayerModeContext");

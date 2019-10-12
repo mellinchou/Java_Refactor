@@ -37,37 +37,40 @@ public class ClientMain extends JFrame{
 		GAME_STATE gameRole=GAME_STATE.BLACK;//initialize
 		Scanner in = new Scanner(System.in);
 		try {
-			playMusic();				
-			while(getAddress()=="") {
-				//stay here dont move until ip address is entered
-			}
+			playMusic();
 			Socket cSock= new Socket(ipAddress, 8888);
 			serverInput = new DataInputStream(cSock.getInputStream());
 			serverOutput = new DataOutputStream(cSock.getOutputStream());
-
-			//System.out.println("Online or play with computer? Input 0 for online, 1 for computer:");
-			//serverOutput.writeInt(in.nextInt());
-
-			role = serverInput.readInt();//the first integer server sends is the color of the player
-			gameRole=serverFeedBackToGameState(role);//convert the role into BLACK or WHITE
-
-			int roundCount=1;
-			while (true) { 
-				//read the game board from the server
-				System.out.println("Round "+roundCount);
-				setUI();
-				roundCount++;
-				updateGame(gameRole);
-				if(gameState==GAME_STATE.BLACK_WIN||gameState==GAME_STATE.WHITE_WIN||gameState==GAME_STATE.DRAW){
-					break;
+			
+			while (true) {
+				while(getAddress()=="") {
+					//stay here dont move until ip address is entered
 				}
+				role = serverInput.readInt();//the first integer server sends is the color of the player
+				System.out.println("Client got role "+role);
+				gameRole=serverFeedBackToGameState(role);//convert the role into BLACK or WHITE
+	
+				int roundCount=1;
+				while (true) { 
+					//read the game board from the server
+					System.out.println("Round "+roundCount);
+					setUI();
+					roundCount++;
+					updateGame(gameRole);
+					if(gameState==GAME_STATE.BLACK_WIN||gameState==GAME_STATE.WHITE_WIN||gameState==GAME_STATE.DRAW){
+						break;
+					}
+				}
+				//game ends, reset for playing again
+				game_frame.setVisible(false);
+				start_frame.setVisible(true);
+				ipAddress="";
 			}
-			game_frame.setVisible(false);
-			start_frame.setVisible(true);
-
-			serverOutput.close();
-			serverInput.close();
-			cSock.close();
+			
+			
+//			serverOutput.close();
+//			serverInput.close();
+//			cSock.close();
 		} catch (IOException e) {
 			System.out.println("exception 1 from ClientMain "+e.getMessage());
 			System.exit(0);
@@ -165,7 +168,7 @@ public class ClientMain extends JFrame{
 		serverOutput.writeInt(x);
 	}
 	public static String getAddress() {
-		System.out.println("Get address function's ip: "+ipAddress);
+		System.out.print("");
 		return ipAddress;
 	}
 	public static void setAddress(String ads) {

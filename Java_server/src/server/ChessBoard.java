@@ -14,6 +14,14 @@ public class ChessBoard {
 		}
 		//print();
 	}
+	
+	public void resetBoard() {
+		for (int i = 0; i < ROW; i++) {
+			for (int j = 0; j < COL; j++) {
+				keys[i][j] = 0;// initialize the game board with all empty keys
+			}
+		}
+	}
 
 	public void print() {
 		for (int i = 0; i < ROW; i++) {

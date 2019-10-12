@@ -31,12 +31,15 @@ public class SinglePlayerMode extends PlayerMode{
 			if (gameState == 1) {
 				PlayerModeContext.status = Status.BLACK_WIN;
 				PlayerModeContext.clientOutput1.writeInt(2);
+				return;
 			} else if (gameState == 2) {
 				PlayerModeContext.status = Status.WHITE_WIN;
 				PlayerModeContext.clientOutput1.writeInt(-2);
+				return;
 			} else if (gameState == 8) {
 				PlayerModeContext.status = Status.DRAW;
 				PlayerModeContext.clientOutput1.writeInt(0);
+				return;
 			}
 
 			if (PlayerModeContext.turn == Turn.BLACK) {

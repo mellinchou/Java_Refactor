@@ -72,6 +72,7 @@ public class GameModeFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btn_online) {
 			try {
+				
 				ClientMain.send(0);// send the decision of the game mode to the server
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -80,6 +81,7 @@ public class GameModeFrame extends JFrame implements ActionListener {
 			ClientMain.game_frame.setVisible(true);
 		} else if (e.getSource() == btn_pc) {
 			try {
+				System.out.println("Client sending game mode");
 				ClientMain.send(1);// send the decision of the game mode to the server
 			} catch (IOException e1) {
 				e1.printStackTrace();
