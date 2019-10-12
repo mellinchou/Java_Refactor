@@ -6,26 +6,20 @@ import server.ServerMain.Status;
 import server.ServerMain.Turn;
 
 public class SinglePlayerMode extends PlayerMode{
-
+	
+	public static ComputerPlay computer=new ComputerPlay();
+	
 	public SinglePlayerMode() {
 		super();
 	}
 	
-	Status status = Status.CONTINUE;
-	Turn turn = Turn.BLACK;// black starts the game
-	int x_black = -1, y_black = -1, x_white = -1, y_white = -1;
-
-	
-
-	public static ComputerPlay computer=new ComputerPlay();
-	
 	@Override
 	public void execute() {
-		while (status == Status.CONTINUE) {
-			turn=round_computer(status, turn,x_black,y_black);
+		while (PlayerModeContext.status == Status.CONTINUE) {
+			round_computer();
 		}
 	}
-	public static Turn round_computer(Status status,Turn turn, int x_black,int y_black) {
+	public static void round_computer() {
 		try {
 			for (int i = 0; i < 19; i++) { // send the current game board to the player
 				for (int j = 0; j < 19; j++) {
@@ -35,26 +29,26 @@ public class SinglePlayerMode extends PlayerMode{
 
 			int gameState = PlayerModeContext.chessBoard.checkWin(PlayerModeContext.chessBoard.keys, 5);
 			if (gameState == 1) {
-				status = Status.BLACK_WIN;
+				PlayerModeContext.status = Status.BLACK_WIN;
 				PlayerModeContext.clientOutput1.writeInt(2);
 			} else if (gameState == 2) {
-				status = Status.WHITE_WIN;
+				PlayerModeContext.status = Status.WHITE_WIN;
 				PlayerModeContext.clientOutput1.writeInt(-2);
 			} else if (gameState == 8) {
-				status = Status.DRAW;
+				PlayerModeContext.status = Status.DRAW;
 				PlayerModeContext.clientOutput1.writeInt(0);
 			}
 
-			if (turn == Turn.BLACK) {
+			if (PlayerModeContext.turn == Turn.BLACK) {
 				PlayerModeContext.clientOutput1.writeInt(1);// 1 for black
-				x_black = PlayerModeContext.clientInput1.readInt();// read the coordinates from the player
-				y_black = PlayerModeContext.clientInput1.readInt();
+				PlayerModeContext.x_black = PlayerModeContext.clientInput1.readInt();// read the coordinates from the player
+				PlayerModeContext.y_black = PlayerModeContext.clientInput1.readInt();
 
-				PlayerModeContext.chessBoard.keys[x_black][y_black] = 1;
+				PlayerModeContext.chessBoard.keys[PlayerModeContext.x_black][PlayerModeContext.y_black] = 1;
 				System.out.println("After Black's play");
 				PlayerModeContext.chessBoard.print();
 
-				turn = Turn.WHITE;
+				PlayerModeContext.turn = Turn.WHITE;
 			} else {
 
 				System.out.println("white turn if else");
@@ -65,15 +59,14 @@ public class SinglePlayerMode extends PlayerMode{
 				System.out.println("After White's play");
 				PlayerModeContext.chessBoard.print();
 
-				turn = Turn.BLACK;
+				PlayerModeContext.turn = Turn.BLACK;
 			}
 
 		} catch (IOException e) {
-			System.out.println("exception 8");
+			System.out.println("exception 1 in SinglePlayerMode");
 			e.printStackTrace();
 			System.exit(0);
 		}
-		return turn;
 	}
 
 }

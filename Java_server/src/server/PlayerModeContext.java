@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import server.ServerMain.Status;
+import server.ServerMain.Turn;
+
 
 public class PlayerModeContext {
 	private PlayerMode playerMode;
@@ -15,6 +18,9 @@ public class PlayerModeContext {
 	public static DataInputStream clientInput1;
 	public static DataOutputStream clientOutput1;
 	public static ChessBoard chessBoard = new ChessBoard();
+	public static Turn turn = Turn.BLACK;// black starts the game
+	public static int x_black = -1, y_black = -1, x_white = -1, y_white = -1;//coordinates for playing the chess game
+	public static Status status = Status.CONTINUE;//initialize the status as continue
 	
 	public PlayerModeContext() {
 		try {

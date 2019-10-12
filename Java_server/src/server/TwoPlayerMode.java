@@ -12,13 +12,9 @@ public class TwoPlayerMode extends PlayerMode{
 	public static DataInputStream clientInput2;
 	public static DataOutputStream clientOutput2;
 	public static Socket connection2;
-	public static Status status = Status.CONTINUE;//initialize the status as continue
-	public static Turn turn = Turn.BLACK;// black starts the game
-	public static int x_black = -1, y_black = -1, x_white = -1, y_white = -1;//coordinates for playing the chess game
 
 	public TwoPlayerMode() {
 		super();
-		
 		//initialize the sockets and data streams for the second player
 		try {
 			connection2 = PlayerModeContext.serverSock.accept();
@@ -36,12 +32,11 @@ public class TwoPlayerMode extends PlayerMode{
 	
 	@Override
 	public void execute() {
-		while (status == Status.CONTINUE) {
-			turn=round_online(status,turn,x_black,y_black,x_white,y_white);
+		while (PlayerModeContext.status == Status.CONTINUE) {
+			round_online();
 		}
 	} 
-	public static Turn round_online(Status status,Turn turn, int x_black,int y_black,int x_white, int y_white) {
-
+	public static void round_online() {
 		try {
 			for (int i = 0; i < 19; i++) { // send the current game board to the players
 				for (int j = 0; j < 19; j++) {
@@ -52,44 +47,39 @@ public class TwoPlayerMode extends PlayerMode{
 
 			int win = PlayerModeContext.chessBoard.checkWin(PlayerModeContext.chessBoard.keys, 5);
 			if (win == 1) {
-				status = Status.BLACK_WIN;
+				PlayerModeContext.status = Status.BLACK_WIN;
 				PlayerModeContext.clientOutput1.writeInt(2);
 				clientOutput2.writeInt(2);
 			} else if (win == 2) {
-				status = Status.WHITE_WIN;
+				PlayerModeContext.status = Status.WHITE_WIN;
 				PlayerModeContext.clientOutput1.writeInt(-2);
 				clientOutput2.writeInt(-2);
 			} else if (win == 8) {
-				status = Status.DRAW;
+				PlayerModeContext.status = Status.DRAW;
 				PlayerModeContext.clientOutput1.writeInt(0);
 				clientOutput2.writeInt(0);
 			}
 
-			if (turn == Turn.BLACK) {
-				x_black = -1;
-				y_black = -1;
+			if (PlayerModeContext.turn == Turn.BLACK) {
 				PlayerModeContext.clientOutput1.writeInt(1);// 1 for black
 				clientOutput2.writeInt(1);
-				x_black = PlayerModeContext.clientInput1.readInt();// read the coordinates from the players
-				y_black = PlayerModeContext.clientInput1.readInt();
+				PlayerModeContext.x_black = PlayerModeContext.clientInput1.readInt();// read the coordinates from the players
+				PlayerModeContext.y_black = PlayerModeContext.clientInput1.readInt();
 
-				PlayerModeContext.chessBoard.keys[x_black][y_black] = 1;
+				PlayerModeContext.chessBoard.keys[PlayerModeContext.x_black][PlayerModeContext.y_black] = 1;
 				System.out.println("After Black's play");
-				System.out.println("From Client Black: " + x_black + y_black);
-				turn = Turn.WHITE;
+				System.out.println("From Client Black: " + PlayerModeContext.x_black + PlayerModeContext.y_black);
+				PlayerModeContext.turn = Turn.WHITE;
 			} else {
-				x_white = -1;
-				y_white = -1;
 				PlayerModeContext.clientOutput1.writeInt(-1);
 				clientOutput2.writeInt(-1);// 2 for white
-				x_white = clientInput2.readInt();// read the coordinates from the players
-				y_white = clientInput2.readInt();
+				PlayerModeContext.x_white = clientInput2.readInt();// read the coordinates from the players
+				PlayerModeContext.y_white = clientInput2.readInt();
 
-				PlayerModeContext.chessBoard.keys[x_white][y_white] = 2;
+				PlayerModeContext.chessBoard.keys[PlayerModeContext.x_white][PlayerModeContext.y_white] = 2;
 				System.out.println("After White's play");
-				// p1.print();
-				System.out.println("From Client White: " + x_white + "" + y_white);
-				turn = Turn.BLACK;
+				System.out.println("From Client White: " + PlayerModeContext.x_white + "" + PlayerModeContext.y_white);
+				PlayerModeContext.turn = Turn.BLACK;
 			}
 
 		} catch (IOException e) {
@@ -98,6 +88,5 @@ public class TwoPlayerMode extends PlayerMode{
 			e.printStackTrace();
 			System.exit(0);
 		}
-		return turn;
 	}
 }
