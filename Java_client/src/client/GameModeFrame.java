@@ -18,8 +18,8 @@ import javax.swing.border.Border;
 //this is the window to select the game mode
 public class GameModeFrame extends UIFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private final JButton btn_online = new JButton("Online Player");
-	private final JButton btn_pc = new JButton("  Computer  ");
+	private final JButton btn_online = new JButton("vs. Online Player");
+	private final JButton btn_pc = new JButton("vs. Computer ");
 	private final JButton btn_back = new JButton("    Back    ");
 
 	Border paddingbtw = BorderFactory.createEmptyBorder(20, 40, 20, 40);
@@ -65,6 +65,7 @@ public class GameModeFrame extends UIFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		MusicPlayer.playButtonClickSound();//play the click sound
 		if (e.getSource() == btn_online) {
 			try {
 				GameExecuter.send(0);// send the decision of the game mode to the server

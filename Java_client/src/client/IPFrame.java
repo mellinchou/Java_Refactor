@@ -56,6 +56,7 @@ public class IPFrame extends UIFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		MusicPlayer.playButtonClickSound();//play the click sound
 		if (e.getSource() == btn_back) {
 			this.setVisible(false);// close the current frame and show the next frame
 			GameExecuter.ui_frames[0].setVisible(true);

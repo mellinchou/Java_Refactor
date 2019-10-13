@@ -50,6 +50,7 @@ public class StartFrame extends UIFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		MusicPlayer.playButtonClickSound();//play the click sound
 		if (e.getSource() == btn_instructions)
 			JOptionPane.showMessageDialog(null,
 					"Gomoku, also called Five in a Row, is an abstract strategy board game.\nGomoku is a simple game. Players taking turn to place black and white stones on the board, \nand whoever has 5 stones in a row first (horizontally, vertically, or diagonally) wins the game.\nYou can choose to play against computer or play online with another player.",
