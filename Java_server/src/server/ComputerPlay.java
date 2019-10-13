@@ -21,7 +21,7 @@ public class ComputerPlay {
 				for (int j = 0; j < COL; j++) {
 					if (imaginary_keys[i][j] == 0) {
 						imaginary_keys[i][j] = 2;
-						if (ServerMain.chessBoard.checkWin(keys, imaginary_win_condition) == 2) {
+						if (PlayerModeContext.chessBoard.checkWin(keys, imaginary_win_condition) == 2) {
 							decision[0] = i;
 							decision[1] = j;
 							return decision;
@@ -35,7 +35,7 @@ public class ComputerPlay {
 				for (int j = 0; j < COL; j++) {
 					if (imaginary_keys[i][j] == 0) {
 						imaginary_keys[i][j] = 1;
-						if (ServerMain.chessBoard.checkWin(keys, imaginary_win_condition) == 1) {
+						if (PlayerModeContext.chessBoard.checkWin(keys, imaginary_win_condition) == 1) {
 							decision[0] = i;
 							decision[1] = j;
 							return decision;

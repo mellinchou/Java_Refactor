@@ -41,8 +41,9 @@ public class ChessButton extends JButton implements ActionListener {
 		String[] cor = coordinates.split(" ");// split the string into separate numbers
 
 		try {
-			ClientMain.send(Integer.parseInt(cor[0]), Integer.parseInt(cor[1]));// send the coordinates back to the
-																				// server
+			MusicPlayer.playButtonClickSound();//play the click sound
+			GameExecuter.send(Integer.parseInt(cor[0]), Integer.parseInt(cor[1]));// send the coordinates back to the server
+			
 		} catch (NumberFormatException e1) {
 			System.out.println("exception 2");
 			e1.printStackTrace();
