@@ -11,11 +11,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class IPFrame extends JFrame implements ActionListener {
+public class IPFrame extends UIFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final TextField ip_tf = new TextField(50);
 	private final JButton btn_connect = new JButton("Connect");
@@ -23,10 +22,6 @@ public class IPFrame extends JFrame implements ActionListener {
 	private final JPanel container = new JPanel();
 
 	public IPFrame() {
-		setTitle("Server IP");
-		setSize(600, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBackground(new Color(106, 197, 254));
 
 		JLabel background = new JLabel(new ImageIcon(".\\ippage2.jpg"));
 
@@ -63,11 +58,11 @@ public class IPFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btn_back) {
 			this.setVisible(false);// close the current frame and show the next frame
-			ClientMain.start_frame.setVisible(true);
+			GameExecuter.ui_frames[0].setVisible(true);
 		} else if (e.getSource() == btn_connect) {
-			ClientMain.setAddress(ip_tf.getText());// set the ip entered to the ip used by main to create the socket
+			GameExecuter.setAddress(ip_tf.getText());// set the ip entered to the ip used by main to create the socket
 			this.setVisible(false);// close the current frame and show the next frame
-			ClientMain.gamemode_frame.setVisible(true);
+			GameExecuter.ui_frames[2].setVisible(true);
 		}
 
 	}

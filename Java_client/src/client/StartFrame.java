@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 //this is the first window to show up
-public class StartFrame extends JFrame implements ActionListener {
+public class StartFrame extends UIFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JButton btn_instructions = new JButton("Instructions");
 	private final JButton btn_start = new JButton("    Play    ");
@@ -18,12 +18,6 @@ public class StartFrame extends JFrame implements ActionListener {
 	Border paddingbtw = BorderFactory.createEmptyBorder(20, 40, 20, 40);
 
 	public StartFrame() {
-		setTitle("Online Gomoku Game");
-		setSize(800, 600);
-		setBackground(new Color(106, 197, 254));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-
 		JLabel background = new JLabel(new ImageIcon(".\\startpage2.jpg"));
 		JPanel titleBox = new JPanel();
 		titleBox.setBackground(new Color(106, 197, 254));
@@ -62,7 +56,7 @@ public class StartFrame extends JFrame implements ActionListener {
 					"Instruction", JOptionPane.INFORMATION_MESSAGE);
 		else if (e.getSource() == btn_start) {
 			this.setVisible(false);
-			ClientMain.ip_frame.setVisible(true);
+			GameExecuter.ui_frames[1].setVisible(true);
 		} else if (e.getSource() == btn_exit)
 			System.exit(0);
 	}

@@ -11,13 +11,12 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 //this is the window to select the game mode
-public class GameModeFrame extends JFrame implements ActionListener {
+public class GameModeFrame extends UIFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JButton btn_online = new JButton("Online Player");
 	private final JButton btn_pc = new JButton("  Computer  ");
@@ -32,10 +31,6 @@ public class GameModeFrame extends JFrame implements ActionListener {
 	Border padding = BorderFactory.createEmptyBorder(70, 70, 50, 50);
 
 	public GameModeFrame() {
-		setTitle("Online Gomoku Game");
-		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBackground(new Color(106, 197, 254));
 
 		JLabel background = new JLabel(new ImageIcon(".\\gamemodepage2.jpg"));
 
@@ -72,25 +67,24 @@ public class GameModeFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btn_online) {
 			try {
-				
-				ClientMain.send(0);// send the decision of the game mode to the server
+				GameExecuter.send(0);// send the decision of the game mode to the server
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			this.setVisible(false);// close the current frame and show the next frame
-			ClientMain.game_frame.setVisible(true);
+			GameExecuter.ui_frames[3].setVisible(true);
 		} else if (e.getSource() == btn_pc) {
 			try {
 				System.out.println("Client sending game mode");
-				ClientMain.send(1);// send the decision of the game mode to the server
+				GameExecuter.send(1);// send the decision of the game mode to the server
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			this.setVisible(false);// close the current frame and show the next frame
-			ClientMain.game_frame.setVisible(true);
+			GameExecuter.ui_frames[3].setVisible(true);
 		} else if (e.getSource() == btn_back) {
 			this.setVisible(false);// close the current frame and show the next frame
-			ClientMain.ip_frame.setVisible(true);
+			GameExecuter.ui_frames[3].setVisible(true);
 		}
 	}
 

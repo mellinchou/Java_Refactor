@@ -10,25 +10,19 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class GameFrame extends JFrame{
+public class GameFrame extends UIFrame{
 	private static final long serialVersionUID = 1L;
-	public ChessButton[][] buttons = new ChessButton[19][19];
-	public final JLabel lab_turn=new JLabel("Waiting for the Other Player...");
+	
 	private final JPanel chess_container=new JPanel(new GridLayout(19,19)); 
 	Border padding1 = BorderFactory.createEmptyBorder(15, 15, 40, 40);
 	Border padding = BorderFactory.createEmptyBorder(30, 70, 50, 50);
 	private final JPanel container=new JPanel();
 	
 	public GameFrame() {
-		setTitle("The Online Gomoku Game");
-		setSize(1000, 800);
-		setBackground(new Color(106,197,254));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel background=new JLabel(new ImageIcon(".\\gamepage2.jpg"));
 		JPanel box=new JPanel();
 		
