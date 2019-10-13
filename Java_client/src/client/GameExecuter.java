@@ -37,11 +37,10 @@ public class GameExecuter {
 			System.out.println("Client got role " + role);
 			gameRole = serverFeedBackToGameState(role);// convert the role into BLACK or WHITE
 			
-		} catch (UnknownHostException e) {
+		} catch (Exception e) {
+			System.out.println("Exception 1 from GameExecuter "+e);
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
 		
 		int roundCount = 1;
 		while (true) {
